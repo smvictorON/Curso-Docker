@@ -13,6 +13,10 @@ localmente senão ele baixa o container.
 
 - Sempre que fizer alguma alteração é necessário buildar a imagem/dockerfile novamente, porém a execução será mais rapida pois ele só vai executar a camada modificada, as outras estão cacheadas.
 
+- Os dois pontos (:) é usado no docker para determinar a versão de uma imagem.
+
+- Sempre que for subir uma atualização da imagem para o hub do docker deve se fazer um novo build trocando a tag.
+
 ### ----------------------- CONTAINERS -----------------------
 
 # Executar container de test do proprio docker
@@ -27,13 +31,16 @@ ou
 > docker ps -a
 
 # Executar container e deixar rodando no terminal
-> docker run -it algum_container
+> docker run -it nome_ou_id_do_container
 
 # Executar container e desatachar da execução
-> docker run -d algum_container
+> docker run -d nome_ou_id_do_container
+
+# Remove o container após o uso
+> docker run --rm nome_ou_id_do_container
 
 # Executar container com a exposição de portas (o primeiro numero é a porta de deseja expor(container), e o segundo é através de qual porta expor(pc))
-> docker run -p 3000:80 algum_container
+> docker run -p 3000:80 nome_ou_id_do_container
 
 # Inicia execução do container (pode ser usado somente as 3 primeiras letras do id)
 > docker start id_do_container
@@ -56,6 +63,26 @@ ou
 # Força a remoção do container mesmo que esteja sendo executado (irreversível)(o comando stopa e depois remove)
 > docker rm -f nome_ou_id_do_container
 
+# Utilizando o help é mostrado uma lista de possibilidades do comando
+> docker run --help
+
+# Copiar arquivo do container para o pc ou vice versa
+> docker cp nome_do_container:/diretório/arquivo.extensao ./diretório
+
+# Verificar informações de processamento
+> docker top nome_ou_id_do_container
+
+# Verificar dados do container
+> docker inspect nome_ou_id_do_container
+
+# Verificar dados do docker
+> docker stats
+
+# Logar no docker
+> docker login
+
+# Deslogar no docker
+> docker logout
 
 ### ----------------------- IMAGENS -----------------------
 
@@ -79,8 +106,37 @@ Nessa camada é definida as portas para serem expostas
 Nessa camada é feita a execução semelhante ao run, porém permite um array de comandos
 >CMD ["node", "app.js"]
 
-# Executando uma imagem
-> docker build diretório_da_imagem
+# Gerando uma imagem
+> docker build .
+
+# Gerando uma imagem com nome/tag
+> docker build -t nome_da_imagem:tag_da_imagem .
 
 # Lista as imagens
-> docker image ls
+> docker images
+
+# Baixar imagem do docker hun
+> docker pull nome_da_imagem
+
+# Nomear e tagear imagem, tag nao é obrigatório
+> docker tag id_da_imagem nome_desejado:tag_desejada
+
+# Remover imagem(irreversível)
+> docker rmi nome_ou_id_da_imagem
+
+# Força a remoção da imagem mesmo que esteja sendo executado (irreversível)(o comando stopa e depois remove)
+> docker rmi -f nome_ou_id_da_imagem
+
+# Remove tudo do docker (imagem, container, networks, cache ...)(irreversível)
+> docker system prune
+
+# Enviar imagem para o hub do docker(necessário estar logado)(necessário build a imagem exatamente com o nome do repo)
+> docker push seu_nick/seu_repo
+
+### ----------------------- VOLUMES -----------------------
+
+*** Quando salvamos dados no container se deletarmos o container perdermos os dados, o volume vem para resolver isso salvando em volumes ***
+
+- Anônimos: geralmente usados em testes, não é reaproveitado.
+- Nomeados: podem ser referenciados por isso é recomendando para aplicações.
+- Bind Mounts: salva os dados fora do docker em algum diretório do pc.

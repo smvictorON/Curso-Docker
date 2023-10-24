@@ -140,3 +140,32 @@ Nessa camada é feita a execução semelhante ao run, porém permite um array de
 - Anônimos: geralmente usados em testes, não é reaproveitado.
 - Nomeados: podem ser referenciados por isso é recomendando para aplicações.
 - Bind Mounts: salva os dados fora do docker em algum diretório do pc.
+
+# Rodar um container atrelado a um volume anônimo precisa adicionar a flag -v
+> docker run -d -p 80:80 --name nome_do_container -v /data phpmessages
+
+# Rodar um container atrelado a um volume nomeado precisa adicionar a flag -v com o nome (igual está no workdir)
+> docker run -d -p 80:80 --name nome_do_container -v nome_do_volume phpmessages
+
+# Rodar um container atrelado a um bind mount precisa adicionar a flag -v com o path do diretório(pode dar problema no windows)(colocar entre aspas o path se tiver espaço ou letras maiusculas)
+> docker run -d -p 80:80 --name nome_do_container -v path_dir:nome_do_volume phpmessages
+
+# Rodar um container atrelado a um volume somente leitura precisa adicionar a flag -v com o nome e :ro
+> docker run -d -p 80:80 --name nome_do_container -v nome_do_volume:ro phpmessages
+
+# Mostrar volumes
+> docker volume ls
+
+# Criar volumes
+> docker volume create nome_do_volume
+
+# Checar volumes
+> docker volume inspect nome_do_volume
+
+# Remover volumes
+> docker volume rm nome_do_volume
+
+# Remover volumes em massa
+> docker volume prune
+
+### ----------------------- NETWORKS -----------------------

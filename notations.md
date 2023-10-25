@@ -60,7 +60,7 @@ ou
 # Remover container (irreversível)
 > docker rm nome_ou_id_do_container
 
-# Força a remoção do container mesmo que esteja sendo executado (irreversível)(o comando stopa e depois remove)
+# Força a remoção do container mesmo que esteja sendo executado (irreversível)(o comando stopa e depois remove)Þ
 > docker rm -f nome_ou_id_do_container
 
 # Utilizando o help é mostrado uma lista de possibilidades do comando
@@ -83,6 +83,9 @@ ou
 
 # Deslogar no docker
 > docker logout
+
+# Roda um container com um network junto(-e é uma env)
+> docker run -d -p 3307:3306 --name mysql_api_cont --rm --network flasknetwork -e MYSQL_ALLOW_EMPTY_PASSWORD=True mysqlapinetwork
 
 ### ----------------------- IMAGENS -----------------------
 
@@ -169,3 +172,36 @@ Nessa camada é feita a execução semelhante ao run, porém permite um array de
 > docker volume prune
 
 ### ----------------------- NETWORKS -----------------------
+
+- Externas: conexões com serviços na web ou apis.
+- Com o host: conexão com a maquina que está executando docker.
+- Entre containers: conexões com outros containers no docker.(utiliza driver bridge)
+
+Tipos de rede(drivers)
+- Bridge: o mais comum, utilizado com o default do docker para comunicação entre containers.
+- Host: conexão com a máquina que executa o docker.
+- Macvlan: conexão com um container por meio de um MAC address.
+- None: remove todas as conexões do container.
+- Plugins: permite extensões de terceiros para criar redes.
+
+# Mostrar redes
+> docker network ls
+
+# Criar redes(como padrão ele criar bridge)(-d para definir driver)
+> docker network create nome_da_rede
+> docker network create -d tipo_do_driver nome_da_rede
+
+# Remover redes
+> docker network rm nome_da_rede
+
+# Remover redes em massa
+> docker network prune
+
+# Conectar um container a uma rede
+> docker network connect nome_da_rede id_do_container
+
+# Desconectar um container de uma rede
+> docker network disconnect nome_da_rede id_do_container
+
+# Inspecionar redes
+> docker network inspect nome_da_rede

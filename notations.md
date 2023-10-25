@@ -205,3 +205,7 @@ Tipos de rede(drivers)
 
 # Inspecionar redes
 > docker network inspect nome_da_rede
+
+### ----------------------- YAML -----------------------
+
+Yaml é uma linguagem de serialização e não de marcação como o md, é usada geralmente em configurações

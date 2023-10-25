@@ -1,0 +1,31 @@
+nome: "Victor"
+idade: 28 # comentário inline
+
+objeto_1:
+  a: 1
+  b: "string"
+  c: On
+
+objeto_2: {a: 1, b: "string", c: On}
+
+# comentário
+
+versao_completa: 1.12.123
+
+texto_com_aspas: "c/aspas"
+texto_sem_aspas: s/aspas
+
+dado_nulo_1: null
+dado_nulo_2: ~
+
+verdadeiro_1: True
+verdadeiro_2: On
+
+falso_1: False
+falso_2: Off
+
+array_1: [1,"string",On]
+array_2:
+  - 1
+  - "string"
+  - On

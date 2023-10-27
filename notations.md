@@ -209,3 +209,30 @@ Tipos de rede(drivers)
 ### ----------------------- YAML -----------------------
 
 Yaml é uma linguagem de serialização e não de marcação como o md, é usada geralmente em configurações
+
+### ----------------------- DOCKER COMPOSE -----------------------
+
+É uma ferramenta do proprio docker para rodar multiplos containers e facilitar o trabalho.
+
+É recomendado criar um env_file(db.env) para controlar as variáveis no compose, para chamar essas variáveis basta usar ${VARIAVEL}
+
+Algumas chaves usadas
+- Version: versão do compose.
+- Services: containers que vão rodar.
+- Volumes: se tiver algum volume.
+- Networks: se tiver alguma rede.
+
+# Checar versão
+> docker-compose --version
+
+# Rodar compose
+> docker-compose up
+
+# Rodar desatachado
+> docker-compose up -d
+
+# Parar compose
+> docker-compose down
+
+# Verificar compose
+> docker-compose ps

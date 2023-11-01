@@ -236,3 +236,93 @@ Algumas chaves usadas
 
 # Verificar compose
 > docker-compose ps
+
+### ----------------------- SWARM -----------------------
+
+É uma ferramenta nativa do proprio docker para osquestrar containers!
+Alguns conceitos são utizados na orquestração como
+
+- Nodes: são instancias(maquinas) que participam do Swarm
+- Manager Node: é a máquina que gerencia as outras máquinas, pode ter mais de um.
+- Worker Node: são as máquinas que "trabalham" para as Managers Nodes
+- Service: conjunto de tasks que o manager manda para o worker executar.
+- Tasks: comandos que são executados nos nodes.
+
+*Ao criar um novo node na AWS deve se instalar e iniciar o docker*
+> sudo yum install docker
+> sudo service docker start
+
+**NODE1**
+ssh -i "curso_docker.cer" ec2-user@ec2-3-15-21-149.us-east-2.compute.amazonaws.com
+
+**NODE2**
+ssh -i "curso_docker.cer" ec2-user@ec2-3-144-25-145.us-east-2.compute.amazonaws.com
+
+**NODE3**
+ssh -i "curso_docker.cer" ec2-user@ec2-3-137-176-59.us-east-2.compute.amazonaws.com
+
+**CONECTAR NODES AO SWARM**
+sudo docker swarm join --token SWMTKN-1-343bgai9mhpdnhzn3nku6p5e4idvhqc4iewnl3vrvqjfw9qvc2-1jdraj5fy7scdf654fj1f7a8h 3.15.21.149:2377
+
+
+# Iniciar Swarm (pode ser necessário declarar IP --advertise-addr)
+> docker swarm init
+
+# Sair do Swarm (pode ser necessário usar -f se for o manager)(se for um node ele deixa o status "down" porém continua mapeado no swarm)
+> docker swarm leave
+
+# Remover node do swarm
+> docker node rm id_do_node
+
+# Verificar nodes ativos no swarm (só para node manager)
+> docker node ls
+
+# Adicionar nodes (comando que aparece ao dar o docker swarm init)
+> docker swarm join --token <TOKEN> <IP>:<PORTA>
+
+# Subindo serviço (pode ser necessário usar o -p 80:80)
+> docker service create --name nome_do_serviço nome_da_imagem
+
+# Listar serviços no swarm (só para node manager)
+> docker service ls
+
+# Remover serviço no swarm (só para node manager)
+> docker service rm nome_ou_id_do_serviço
+
+# Replicar serviços no swarm (só para node manager)
+> docker service create --name nome_do_serviço --replicas numero_de_replicas nome_da_imagem
+
+- Ao executar as replicas, mesmo que entremos nas replicas e paramos o container manualmente o node manager se encarregar de subir o container novamente!
+
+# Checando token do swarm (só para node manager)(token para add um manager)
+> docker swarm join-token manager
+
+# Checando token do swarm (só para node manager)(token para add um worker)
+> docker swarm join-token worker
+
+# Checar estrutura do swarm
+> docker info
+
+# Inspecionar serviços (só para node manager)
+> docker service inspect id_ou_nome_do_serviço
+
+# Verificar contianers ativados pelo service
+> docker service ps id_do_service
+
+# Rodar compose com swarm
+> docker stack deploy -c arquivo.yaml nome
+
+# Escalando aplicação com replicas
+> docker service scale nome_do_service=numero_de_replicas
+
+# Ignorar tasks no node (drain ignora, para voltar só trocar por active)
+> docker node update --availability drain id_do_node
+
+# Atualiza imagem no swarm (somente nodes active receberão a atualização)
+> docker service update --image nome_da_imagem id_do_service
+
+# Atualiza network no swarm (somente nodes active receberão a atualização)
+> docker service update --network-add nome_da_rede id_do_service
+
+# Criar rede para swarm (overlay é o tipo de conexao entre nodes)
+> docker network create --driver overlay nome_da_rede

@@ -326,3 +326,103 @@ sudo docker swarm join --token SWMTKN-1-343bgai9mhpdnhzn3nku6p5e4idvhqc4iewnl3vr
 
 # Criar rede para swarm (overlay é o tipo de conexao entre nodes)
 > docker network create --driver overlay nome_da_rede
+
+### ----------------------- KUBERNETES (K8s) -----------------------
+
+Muito semelhante ao Swarm que é nativo do Docker, porém Kubernetes veio antes e foi criado pelo Google para orquestração de containers.
+
+Alguns conceitos
+
+- Control Pane: onde é gerenciado o controle dos processos dos nodes.
+- Nodes: maquinas gerenciadas pelo control pane.
+- Deployment: execução de uma imagem por um pod.
+- Pod: um ou mais containers em um node.
+- Services: serviços que expõe os pods ao mundo externo.
+- kubectl: CLI do kubernetes
+
+**Método imperativo é quando iniciamos a aplicação com comandos**
+**Método declarativo funciona como se fosse o docker compose**
+
+Comando mais usados no modo declarativo
+
+- apiVersion: versão da ferramenta
+- kind: tipo do arquivo (Deployment ou Service)
+- metadada: descrever um objeto com chaves
+- replicas: numero de replicas
+- containers: definir configurações do container
+
+*Se for colocar o service e o deployment no mesmo yaml, iniciar com --- colocar o service depois na outra linha separar com --- e colocar as config do deployment*
+
+**Para essa sessão instalei o kubectl e minikube**
+
+# Iniciar minikube (driver pode ser o docker ou qualquer outra vm)
+> minikube start --driver=<DRIVER>
+
+# Parar minikube
+> minikube stop
+
+# Testar minikube
+> minikube status
+
+# Saber versão
+> minikube version
+
+# Acessar dashboard (adicionar --url para ver somente a url)
+> minikube dashboard
+
+# Deploy
+> kubectl create deployment <NOME> --image=<IMAGEM>
+
+# Checar deploys
+> kubectl get deployments
+
+# Descrever deploys
+> kubectl describe deployments
+
+# Checar pods
+> kubectl get pods
+
+# Descrever pods
+> kubectl describe pods
+
+# Mostrar configs do kubernetes
+> kubectl config view
+
+# Criar service (o tipo mais usado é o LoadBalancer)
+> kubectl expose deployment <NOME> --type=<TIPO> --port=<PORT>
+
+# Gerando IP para o service
+> minikube service <NOME>
+
+# Checar services
+> kubectl get services
+
+# Descrever services
+> kubectl describe services/<NOME>
+
+# Escalando aplicação (tanto para aumentar quanto para diminuir as replicas)
+> kubectl scale deployment/<NOME> --replicas=<NUMERO>
+
+# Checar numero de replicas
+> kubectl get rs
+
+# Atualizar imagem
+> kubectl set image deployment/<NOME> <CONTAINER>=<IMAGEM>
+
+# Verificar alteração
+> kubectl rollout status deployment/<NOME>
+
+# Desfazer alteração (rollback)
+> kubectl rollout undo deployment/<NOME>
+
+# Deletar serviço
+> kubectl delete service <NOME>
+
+# Deletar deployment
+> kubectl delete deployment <NOME>
+
+# Executar arquivo de deployment/service(yaml) no modo declarativo
+> kubectl apply -f <ARQUIVO>
+
+# Parar deployment/service(yaml) no modo declarativo
+> kubectl delete -f <ARQUIVO>

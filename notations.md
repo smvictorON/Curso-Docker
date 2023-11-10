@@ -426,3 +426,93 @@ Comando mais usados no modo declarativo
 
 # Parar deployment/service(yaml) no modo declarativo
 > kubectl delete -f <ARQUIVO>
+
+### ----------------------- COMANDOS TERMINAL (UNIX) -----------------------
+
+**Terminal é onde o shell é executado**
+**Shell é o que executa o comando**
+**Podemos concatenar comandos com &&**
+
+BANDEIRA + R no terminal abre a busca de comandos <--- Muito útil
+
+Ex: Estrutura de comandos
+> comando -opçoes arquivos/diretorios
+
+# cd (change directory)
+
+leva ao ultimo diretório
+> cd -
+
+volta para o diretório acima
+> cd ..
+
+leva ao diretorio home
+> cd ~
+
+mostra diretórios na pasta ou auto-complete
+> cd + tab
+
+# ls (list)
+
+mostrar arquivos com detalhes
+> ls -l
+
+mostrar arquivos com detalhes e tamanho
+> ls -lh
+
+mostrar todos os arquivos ocultos tambem
+> ls -a
+
+mostrar todos os arquivos ocultos tambem com detalhes
+> ls -la
+
+mostrar arquivos com data da ultima modificação
+> ls -ltr
+
+mostrar arquivos do diretorio apontado
+> ls Diretório
+
+mostrar arquivos em ordem reversa
+> ls -r
+
+mostrar subdiretorios
+> ls -R
+
+mostrar arquivos em ordem de tamanho
+> ls -S
+
+mostrar arquivos separados por virgula
+> ls -m
+
+# cat (concatenate)
+
+ler arquivo de texto
+> cat arquivo
+
+ler mais de um arquivo de text
+> cat arquivo1 arquivo2
+
+unir os dois arquivos em um terceiro
+> cat arquivo1 arquivo2 > arquivo3
+
+ler arquivo de texto com linhas numeradas
+> cat -n arquivo
+
+adicionar ao final do arquivo
+> cat arquivo_origem >> arquivo_destino
+
+# touch
+
+modifica data de alteração para atual de um arquivo existente
+> touch arquivo
+
+criar arquivo
+> touch arquivo
+
+criar multiplos arquivos
+> touch arquivo1 arquivo2
+
+# man (manual)
+
+mostra o manual do comando
+> man comando
